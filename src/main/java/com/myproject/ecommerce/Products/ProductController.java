@@ -5,6 +5,7 @@ import com.myproject.ecommerce.Models.Product;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -45,13 +46,12 @@ public class ProductController {
 
     @GetMapping("{id}")
     public Product getProductById(@PathVariable("id") Long id) {
-        //return productService.getProductByID(id);
-        return productService.callFakeStoreServiceAPI(id);
+        return productService.getProductByID(id);
     }
 
-    @GetMapping
-    public void getAllProducts(){
-
+    @GetMapping("getAllProducts")
+    public List<GenericProductDTO> getAllProducts(){
+        return productService.getAllProducts();
     }
 
 }

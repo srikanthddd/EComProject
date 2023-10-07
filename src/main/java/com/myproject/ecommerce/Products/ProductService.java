@@ -4,13 +4,15 @@ import com.myproject.ecommerce.DTO.GenericProductDTO;
 import com.myproject.ecommerce.Models.Product;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ProductService {
 
-    Product getProductByID(Long id);
 
-    public Product callFakeStoreServiceAPI(Long id);
+    public Product getProductByID(Long id);
 
     public GenericProductDTO createProduct(GenericProductDTO product);
+
+    public List<GenericProductDTO> getAllProducts();
 }

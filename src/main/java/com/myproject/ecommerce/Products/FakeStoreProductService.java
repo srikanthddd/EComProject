@@ -9,6 +9,8 @@ import com.myproject.ecommerce.Models.Category;
 import com.myproject.ecommerce.Models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,9 @@ import org.springframework.web.ErrorResponse;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 //@Component
@@ -31,18 +35,14 @@ public class FakeStoreProductService implements ProductService{
 
     private String createProductURL = "https://fakestoreapi.com/products";
 
+    private String getAllProductsURL = "https://fakestoreapi.com/products";
+
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public FakeStoreProductService(RestTemplateBuilder restTemplateBuilder){
         this.restTemplateBuilder = restTemplateBuilder;
     }
 
-    @Override
-    public Product getProductByID(Long id) {
-        Product product = new Product();
-        product.setId(id);
-        return product;
-    }
 
     @Override
     public GenericProductDTO createProduct(GenericProductDTO product) {
@@ -54,8 +54,9 @@ public class FakeStoreProductService implements ProductService{
         return responseEntity.getBody();
     }
 
+
     @Override
-    public Product callFakeStoreServiceAPI(Long id){
+    public Product getProductByID(Long id){
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDTO> response = restTemplate.getForEntity(getProductURL, FakeStoreProductDTO.class, id);
         if(response.getStatusCode().is2xxSuccessful() && response.getBody()!=null && response.getBody().getId()!=null){
@@ -76,5 +77,20 @@ public class FakeStoreProductService implements ProductService{
             throw new ProductNotFoundException("Product not found : "+id);
         }
     }
+
+    @Override
+    public List<GenericProductDTO> getAllProducts() {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<List<GenericProductDTO>> response = restTemplate.exchange(
+                getAllProductsURL,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<GenericProductDTO>>() {
+                }
+        );
+
+        return response.getBody();
+    }
+
 
 }
