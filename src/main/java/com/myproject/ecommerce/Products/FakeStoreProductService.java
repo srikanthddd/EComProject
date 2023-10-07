@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 //@Component
 @Service("FakeStoreProductService")
@@ -81,16 +82,53 @@ public class FakeStoreProductService implements ProductService{
     @Override
     public List<GenericProductDTO> getAllProducts() {
         RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<GenericProductDTO[]> response = restTemplate.getForEntity(getAllProductsURL,GenericProductDTO[].class );
+
+        /*
+        #This below will also work
+
         ResponseEntity<List<GenericProductDTO>> response = restTemplate.exchange(
                 getAllProductsURL,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<GenericProductDTO>>() {
                 }
-        );
+        );*/
 
-        return response.getBody();
+        return List.of(response.getBody());
     }
 
+    /*@Override
+
+    #This will also work..
+
+    public List<GenericProductDTO> getAllProducts() {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<FakeStoreProductDTO[]> response = restTemplate.getForEntity(getAllProductsURL, FakeStoreProductDTO[].class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            FakeStoreProductDTO[] products = response.getBody();
+            if (products != null) {
+                // Convert from FakeStoreProductDTO to GenericProductDTO
+                return Arrays.stream(products)
+                        .map(this::convertToGenericProductDTO)
+                        .collect(Collectors.toList());
+            }
+        }
+
+        // Handle the case when the response is not successful or there are no products.
+        return Collections.emptyList();
+    }
+
+    private GenericProductDTO convertToGenericProductDTO(FakeStoreProductDTO fakeStoreProductDTO) {
+        GenericProductDTO product = new GenericProductDTO();
+        product.setId(fakeStoreProductDTO.getId());
+        product.setTitle(fakeStoreProductDTO.getTitle());
+        product.setPrice(fakeStoreProductDTO.getPrice());
+        product.setCategory(fakeStoreProductDTO.getCategory());
+        product.setDescription(fakeStoreProductDTO.getDescription());
+        product.setImage(fakeStoreProductDTO.getImage());
+        return product;
+    }*/
 
 }
