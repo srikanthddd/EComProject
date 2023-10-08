@@ -9,7 +9,7 @@ import java.util.Map;
 
 //@Component
 @Service("FakeStoreProductServiceExample")
-public class FakeStoreProductServiceExample implements ProductService{
+public class FakeStoreProductServiceExample{
 
 /*    @Override
     public Product getProductByID(Long id) {
@@ -18,17 +18,15 @@ public class FakeStoreProductServiceExample implements ProductService{
         return product;
     }*/
 
-    @Override
+
     public Product getProductByID(Long id) {
         return null;
     }
 
-    @Override
     public GenericProductDTO createProduct(GenericProductDTO product) {
         return null;
     }
 
-    @Override
     public List<GenericProductDTO> getAllProducts() {
         return null;
     }

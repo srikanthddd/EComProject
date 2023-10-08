@@ -10,10 +10,7 @@ import com.myproject.ecommerce.Models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.ErrorResponse;
@@ -34,7 +31,11 @@ public class FakeStoreProductService implements ProductService{
 
     private String getProductURL = "https://fakestoreapi.com/products/{id}";
 
+    private String deleteProductURL = "https://fakestoreapi.com/products";
+
     private String createProductURL = "https://fakestoreapi.com/products";
+
+    private String updateProductURL = "https://fakestoreapi.com/products";
 
     private String getAllProductsURL = "https://fakestoreapi.com/products";
 
@@ -57,9 +58,12 @@ public class FakeStoreProductService implements ProductService{
 
 
     @Override
-    public Product getProductByID(Long id){
+    public ResponseEntity<Product> getProductByID(Long id){
+
         RestTemplate restTemplate = restTemplateBuilder.build();
+
         ResponseEntity<FakeStoreProductDTO> response = restTemplate.getForEntity(getProductURL, FakeStoreProductDTO.class, id);
+
         if(response.getStatusCode().is2xxSuccessful() && response.getBody()!=null && response.getBody().getId()!=null){
             FakeStoreProductDTO fakeStoreProductDTO = response.getBody();
             Product product = new Product();
@@ -73,9 +77,15 @@ public class FakeStoreProductService implements ProductService{
             product.setTitle(fakeStoreProductDTO.getTitle());
             product.setImage(fakeStoreProductDTO.getImage());
 
-            return product;
+            return new ResponseEntity<Product>(
+                    product,
+                    HttpStatus.ACCEPTED
+            );
         }else {
-            throw new ProductNotFoundException("Product not found : "+id);
+            throw new ProductNotFoundException("Product id "+ id +" not found : ");
+            /*return new ResponseEntity<Product>(
+                    HttpStatus.BAD_REQUEST
+            );*/
         }
     }
 
@@ -130,5 +140,26 @@ public class FakeStoreProductService implements ProductService{
         product.setImage(fakeStoreProductDTO.getImage());
         return product;
     }*/
+
+    public GenericProductDTO deleteProduct(Long id){
+        String url = deleteProductURL + "/" + id;
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<GenericProductDTO> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, null, GenericProductDTO.class);
+        return responseEntity.getBody();
+    }
+
+    public FakeStoreProductDTO updateProduct(Long id, GenericProductDTO genericProductDTO){
+        String url = updateProductURL + "/" + id;
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        HttpEntity<GenericProductDTO> requestEntity = new HttpEntity<>(genericProductDTO);
+        ResponseEntity<GenericProductDTO> responseEntity =  restTemplate.exchange(url, HttpMethod.PUT, requestEntity, GenericProductDTO.class);
+        GenericProductDTO genericProductDTO1 = responseEntity.getBody();
+
+        FakeStoreProductDTO fakeStoreProductDTO = new FakeStoreProductDTO();
+        fakeStoreProductDTO.setId(genericProductDTO1.getId());
+        fakeStoreProductDTO.setTitle(genericProductDTO1.getTitle());
+
+        return  fakeStoreProductDTO;
+    }
 
 }
