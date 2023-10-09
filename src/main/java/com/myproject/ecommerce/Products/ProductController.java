@@ -1,6 +1,6 @@
 package com.myproject.ecommerce.Products;
 
-import com.myproject.ecommerce.DTO.FakeStoreProductDTO;
+import com.myproject.ecommerce.thirdPartyClients.ProductService.FakeStore.FakeStoreProductDTO;
 import com.myproject.ecommerce.DTO.GenericProductDTO;
 import com.myproject.ecommerce.Exceptions.ErrorDTO;
 import com.myproject.ecommerce.Exceptions.ProductNotFoundException;
