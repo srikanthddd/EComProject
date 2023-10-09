@@ -4,12 +4,14 @@ import com.myproject.ecommerce.thirdPartyClients.ProductService.FakeStore.FakeSt
 import com.myproject.ecommerce.DTO.GenericProductDTO;
 import com.myproject.ecommerce.Models.Product;
 import com.myproject.ecommerce.thirdPartyClients.ProductService.FakeStore.FakeStoreServiceThirdPartyClient;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 //@Component
+@Primary  // Primary and Qualifier, if we dont give @qualifier, by default the class with annotation @Primary will be called.
 @Service("FakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
 
