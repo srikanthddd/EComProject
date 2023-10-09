@@ -6,6 +6,7 @@ import com.myproject.ecommerce.Exceptions.ProductNotFoundException;
 import com.myproject.ecommerce.Models.Category;
 import com.myproject.ecommerce.Models.Product;
 import com.myproject.ecommerce.thirdPartyClients.ProductService.ThirdPartyProductService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -23,13 +24,17 @@ public class FakeStoreServiceThirdPartyClient implements ThirdPartyProductServic
 
     private String getProductURL = "https://fakestoreapi.com/products/{id}";
 
-    private String deleteProductURL = "https://fakestoreapi.com/products";
+    @Value("{fakestore.api.url}")
+    private String deleteProductURL;
 
-    private String createProductURL = "https://fakestoreapi.com/products";
+    @Value("{fakestore.api.url}")
+    private String createProductURL;
 
-    private String updateProductURL = "https://fakestoreapi.com/products";
+    @Value("{fakestore.api.url}")
+    private String updateProductURL;
 
-    private String getAllProductsURL = "https://fakestoreapi.com/products";
+    @Value("{fakestore.api.url}")
+    private String getAllProductsURL;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
