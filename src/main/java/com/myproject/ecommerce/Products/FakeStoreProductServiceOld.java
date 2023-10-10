@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 //@Component
-@Service("FakeStoreProductService")
+@Service("FakeStoreProductServiceOld")
 public class FakeStoreProductServiceOld implements ProductService{
 
     private RestTemplateBuilder restTemplateBuilder;
