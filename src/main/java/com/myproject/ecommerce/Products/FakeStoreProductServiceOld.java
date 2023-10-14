@@ -57,7 +57,7 @@ public class FakeStoreProductServiceOld implements ProductService{
         if(response.getStatusCode().is2xxSuccessful() && response.getBody()!=null && response.getBody().getId()!=null){
             FakeStoreProductDTO fakeStoreProductDTO = response.getBody();
             Product product = new Product();
-            product.setId(fakeStoreProductDTO.getId());
+            //product.setId(fakeStoreProductDTO.getId());
             String category = fakeStoreProductDTO.getCategory();
             Category categoryObj = new Category();
             categoryObj.setName(category);
