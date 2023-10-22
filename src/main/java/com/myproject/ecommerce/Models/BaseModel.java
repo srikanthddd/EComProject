@@ -12,8 +12,8 @@ public class BaseModel {
 
 
     @Id
-    @GeneratedValue(generator = "uuidgenerator")
-    @GenericGenerator(name = "uuidgenerator", strategy = "uuid2")
+    @GeneratedValue(generator = "uuidgeneratorname")
+    @GenericGenerator(name = "uuidgeneratorname", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "binary(16)", nullable = false)
     private UUID uuid;
 
