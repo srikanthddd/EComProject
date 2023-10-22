@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name = "joinedTable_User")
+@PrimaryKeyJoinColumn(name = "user_id")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
