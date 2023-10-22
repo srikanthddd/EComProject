@@ -1,8 +1,8 @@
-package com.myproject.ecommerce.InteritanceDemo.Joined;
+package com.myproject.ecommerce.InteritanceDemo.TablePerClass;
 
 import jakarta.persistence.Entity;
 
-@Entity(name = "joined_TA")
+@Entity(name = "tablePerClass_TA")
 public class TA extends User {
 
     private double averageRating;

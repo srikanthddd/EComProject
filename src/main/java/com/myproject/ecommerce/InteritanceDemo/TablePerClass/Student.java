@@ -1,8 +1,8 @@
-package com.myproject.ecommerce.InteritanceDemo.Joined;
+package com.myproject.ecommerce.InteritanceDemo.TablePerClass;
 
 import jakarta.persistence.Entity;
 
-@Entity(name = "joined_student")
+@Entity(name = "tablePerClass_student")
 public class Student extends User {
 
     private double PSP;
