@@ -1,6 +1,7 @@
 package com.myproject.ecommerce.Products;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.myproject.ecommerce.Models.Price;
 import com.myproject.ecommerce.thirdPartyClients.ProductService.FakeStore.FakeStoreProductDTO;
 import com.myproject.ecommerce.DTO.GenericProductDTO;
 import com.myproject.ecommerce.Exceptions.ProductNotFoundException;
@@ -62,7 +63,10 @@ public class FakeStoreProductServiceOld implements ProductService{
             Category categoryObj = new Category();
             categoryObj.setName(category);
             product.setCategory(categoryObj);
-            product.setPrice(fakeStoreProductDTO.getPrice());
+            Price price = new Price();
+            price.setCurrency("INR");
+            price.setPrice(10000);
+            product.setPrice(price);
             product.setDescription(fakeStoreProductDTO.getDescription());
             product.setTitle(fakeStoreProductDTO.getTitle());
             product.setImage(fakeStoreProductDTO.getImage());
